@@ -1,0 +1,161 @@
+Task 2 – Phishing Email Analysis Report
+
+Cybersecurity Internship – Phishing Email Analysis
+Email Theme: Fake Amazon Gift Card Reward Notification
+Tools Used: MXToolbox – Header Analyzer
+
+1. Objective
+
+To analyze a suspicious email claiming to offer an Amazon Gift Card and to identify phishing indicators by examining sender details, email headers, SPF/DKIM results, and message content.
+
+2. Email Sample Summary
+
+Subject: “You have won an Amazon Gift Card!”
+Sender Display Name: “Amazon Rewards”
+Actual Sender (Return-Path):
+Return@tvportal.tiscali.it
+
+Body Summary:
+The email claims the user has been selected to receive an Amazon gift card and must click a link to claim the prize.
+
+3. Header Analysis (MXToolbox Results)
+
+Based on the header screenshot you provided:
+
+a. DKIM Status
+dkim=permerror (no key for signature)
+header.i=@questionprov717059741207719264.com
+
+
+✔ DKIM permanent error
+✔ Domain “questionprov717059741207719264.com” is not related to Amazon
+✔ Shows clear spoofing and lack of verification
+
+b. Return-Path
+Return-Path: <Return@tvportal.tiscali.it>
+
+
+✔ Amazon never uses tiscali.it (an Italian ISP)
+✔ Misaligned with the sender name “Amazon Rewards”
+✔ Strong indicator of fake sender identity
+
+c. SPF Result
+Received-SPF: pass (google.com: domain of return@tvportal.tiscali.it designates 45.130.201.129 as permitted sender)
+
+
+Important clarification:
+
+SPF passed, but for the domain tiscali.it, NOT Amazon.
+
+Attackers often use real but compromised mail servers.
+
+SPF Passing does NOT guarantee legitimacy when domain itself is unrelated.
+
+✔ Source IP: 45.130.201.129
+✔ This IP belongs to a hosting provider, NOT Amazon infrastructure.
+
+d. Authentication-Results Summary
+dkim=permerror
+d=questionprov717059741207719264.com
+
+
+✔ Completely unrelated domain
+✔ DKIM failed → message not verified
+✔ Authentication mismatch → high risk of phishing
+
+e. DomainKey / ARC Results
+domainkey-signature: nofws
+arc-seal: none
+
+
+✔ ARC chain verification missing
+✔ Typical of mass-mailed phishing campaigns
+
+4. Content Indicators (Social Engineering Techniques)
+a. Suspicious Offer
+
+Claims user has “won an Amazon Gift Card”
+
+Common scam used to lure victims into clicking malicious links
+
+b. Urgency / CTA
+
+“Claim immediately before it expires!”
+
+Creates pressure to act quickly
+
+c. Generic Greeting
+
+Email starts with “Dear User” instead of your name
+
+d. Grammar / Formatting Problems
+
+Minor grammar mistakes
+
+Inconsistent formatting compared to official Amazon communications
+
+e. Link Behavior
+
+Link body: “Claim your reward”
+
+Hover URL: not an Amazon domain
+
+Likely leads to credential-harvesting or malware site
+
+5. Identified Phishing Indicators (Summary Table)
+Phishing Indicator	Evidence
+Fake sender domain	@tvportal.tiscali.it (not Amazon)
+DKIM permanent error	DKIM signature missing/no key
+Unrelated domain in header.i	questionprov717059741207719264.com
+Suspicious IP address	45.130.201.129 (not Amazon)
+Mismatch between display name and actual sender	“Amazon Rewards” vs tiscali.it
+Suspicious “won a gift card” theme	Common scam approach
+Urgent language	“Claim immediately”
+Generic greeting	“Dear User”
+Suspicious links	Hover URL not belonging to Amazon
+6. Risk Level
+⚠️ Overall Risk: HIGH
+
+The email clearly shows multiple strong indicators of phishing:
+
+Spoofed sender
+
+Authentication failures
+
+Non-Amazon domains
+
+Suspicious link behavior
+
+Unrealistic reward offer
+
+7. Recommended Actions
+
+Do not click any link or open attachments.
+
+Report email to your organization’s security team.
+
+Block the sender domain (tiscali.it) at the email gateway.
+
+Submit the phishing link to VirusTotal.
+
+Educate users about:
+
+Gift-card reward scams
+
+Domain mismatch recognition
+
+Checking headers for DKIM/Return-Path issues
+
+If a user clicked the link:
+
+Reset Amazon and email passwords immediately
+
+Enable MFA
+
+Scan device for malware
+
+8. Conclusion
+
+The analyzed email is a phishing attempt disguised as an Amazon Gift Card reward.
+Header mismatches, DKIM errors, unrelated sending domain, and deceptive content confirm malicious intent.
+Proper identification prevented possible credential theft and fraud.
